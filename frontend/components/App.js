@@ -41,13 +41,20 @@ export default function App() {
   const login = ({ username, password }) => {
     setMessage('');
     setSpinnerOn(true);
-    axios.post(loginUrl, { username: username.trim(), password: password.trim() }).then(res => {
-      localStorage.setItem("token", res.data.token);
-      setMessage(res.data.message);
-      setSpinnerOn(false);
-      redirectToArticles();
-    }).catch(err => console.log(err));
+    axios.post(loginUrl, { username: username.trim(), password: password.trim() })
+      .then(res => {
+        localStorage.setItem("token", res.data.token);
+        setMessage(res.data.message);
+        setSpinnerOn(false);
+        getArticles(); // Add this line to fetch articles right after login
+        redirectToArticles();
+      })
+      .catch(err => {
+        setSpinnerOn(false);
+        setMessage('Login failed');
+      });
   };
+  
 
   const getArticles = () => {
     setMessage('');
