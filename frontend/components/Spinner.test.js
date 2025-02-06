@@ -1,19 +1,19 @@
-import React from 'react'
-import { render, screen } from '@testing-library/react'
-import Spinner from './Spinner'
+import React from 'react';
+import { render, screen } from '@testing-library/react';
+import Spinner from './Spinner';
+import '@testing-library/jest-dom';
 
-test('sanity', () => {
-  expect(true).toBe(true)
-})
+test('Spinner reacts to "on" prop changes', () => {
+  // Initial render with "on" prop as false
+  const { rerender, container } = render(<Spinner on={false} />);
+  
+  // Assert that spinner is not rendered initially
+  expect(screen.queryByTestId('spinner')).not.toBeInTheDocument();
 
-test('renders spinner when spinnerOn is true', () => {
-  render(<Spinner spinnerOn={true} />)
-  const spinnerElement = screen.getByTestId('spinner')
-  expect(spinnerElement).toBeInTheDocument()
-})
+  // Re-render with "on" prop as true
+  rerender(<Spinner on={true} />);
 
-test('does not render spinner when spinnerOn is false', () => {
-  render(<Spinner spinnerOn={false} />)
-  const spinnerElement = screen.queryByTestId('spinner')
-  expect(spinnerElement).not.toBeInTheDocument()
-})
+  // Assert that spinner is rendered after prop change
+  const spinnerElement = container.querySelector('#spinner');
+  expect(spinnerElement).toBeInTheDocument();
+});

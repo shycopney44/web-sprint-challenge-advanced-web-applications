@@ -31,6 +31,7 @@ export default function ArticleForm({ postArticle, updateArticle, setCurrentArti
       postArticle(values)
     }
     setCurrentArticleId(null)
+    setValues(initialFormValues) // Add this line to reset form
   }
 
   const isDisabled = () => {
